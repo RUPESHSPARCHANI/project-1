@@ -264,22 +264,6 @@ body {
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.15);
 }
 
-/* Connecting Line */
-.line {
-  position:relative;
-}
-
-.line::before{
-    content: "";
-    position:absolute;
-    left: 50%;
-    top: 0;
-    width: 3px;
-    height: 100%;
-    background: #d1d5db;
-    transform:translateX(-50%);
-    z-index: 0;
-}
 
 .step-card:first-child .line {
   display: none;
