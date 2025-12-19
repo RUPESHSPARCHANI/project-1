@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find My Materials | WasteConnect</title>
+  <style>* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: #0b0f0e;
+  color: white;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: auto;
+  padding-top: 180px;
+  text-align: center;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.hero h1 {
+  font-size: 52px;
+}
+
+.hero h1 span {
+  color: #2ecc71;
+}
+
+.hero p {
+  font-size: 18px;
+  opacity: 0.85;
+  margin-bottom: 30px;
+}
+
+/* SEARCH */
+.search-box {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search-box input,
+.search-box select {
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  min-width: 240px;
+}
+
+/* MATERIALS */
+.materials-section {
+  padding: 80px 40px;
+  background: #f8f9fa;
+  color: #111;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 50px;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+/* CARD */
+.material-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  transform: translateY(40px);
+  opacity: 0;
+  animation: fadeUp 1s forwards;
+}
+
+.material-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.material-card:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO WITH VIDEO -->
+<section class="hero">
+  <video autoplay muted loop class="hero-video">
+    <source src="assets.mp4"  type="video/mp4"/>
+  </video>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <h1>Find Sustainable <span>Materials</span></h1>
+    <p>Discover recyclable materials from verified suppliers across India.</p>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search materials..." />
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+        <option>Plastic</option>
+        <option>Glass</option>
+        <option>Metal</option>
+        <option>E-Waste</option>
+        <option>Organic</option>
+        <option>Paper</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="materials-section">
+  <h2 class="section-title">Available Materials</h2>
+
+  <div class="materials-grid">
+
+    <div class="material-card" data-category="Plastic">
+      <img src="plastic.jpg" />
+      <div class="card-content">
+        <h3>Plastic</h3>
+        <p>PET, HDPE, PVC</p>
+      </div>
+    </div>
+
+    <div class="material-card" data-category="Glass">
+      <img src="glass.jpg" />
+      <div class="card-content">
+        <h3>Glass</h3>
+        <p>Clear, Brown, Green</p>
+      </div>
+    </div>
+
+    <div class="material-card" data-category="Metal">
+      <img src="metal.jpg" />
+      <div class="card-content">
+        <h3>Metal</h3>
+        <p>Steel, Aluminium, Copper</p>
+      </div>
+    </div>
+
+    <div class="material-card" data-category="E-Waste">
+      <img src="ewaste.jpg" />
+      <div class="card-content">
+        <h3>E-Waste</h3>
+        <p>Phones, Computers</p>
+      </div>
+    </div>
+
+    <div class="material-card" data-category="Organic">
+      <img src="organic.jpg" />
+      <div class="card-content">
+        <h3>Organic</h3>
+        <p>Food, Agriculture</p>
+      </div>
+    </div>
+
+    <div class="material-card" data-category="Paper">
+      <img src="paper.jpg" />
+      <div class="card-content">
+        <h3>Paper</h3>
+        <p>Cardboard, Office Paper</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const cards = document.querySelectorAll(".material-card");
+
+function filterMaterials() {
+  const search = searchInput.value.toLowerCase();
+  const category = categoryFilter.value.toLowerCase();
+
+  cards.forEach(card => {
+    const cardText = card.innerText.toLowerCase();
+    const cardCategory = card.dataset.category.toLowerCase();
+
+    const match =
+      cardText.includes(search) &&
+      (category === "" || cardCategory === category);
+
+    card.style.display = match ? "block" : "none";
+  });
+}
+
+searchInput.addEventListener("input", filterMaterials);
+categoryFilter.addEventListener("change", filterMaterials);
+</script>
+</body>
+</html>
+
